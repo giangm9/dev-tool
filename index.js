@@ -33,7 +33,6 @@ function build({ source, outfile, platform, watch }) {
           bundle: true,
           sourcemap: dev ? 'inline' : false,
           minify: build,
-          inject: ['injects/base.preact.js'],
           jsxFactory: 'h',
           jsxFragment: 'Fragment',
           logLevel: 'error',
