@@ -7,7 +7,12 @@ const fs = require("fs");
 const stage = process.argv[2];
 
 
-function build({ source, outfile, platform, watch }) {
+function build({
+  source,
+  outfile,
+  platform,
+  watch
+}) {
 
   const dev = stage == 'dev';
   const build = stage == 'build'
@@ -25,23 +30,28 @@ function build({ source, outfile, platform, watch }) {
     }
   }
 
-  if (source.endsWith('jsx')) {
+  if (source.endsWith('jsx') || source.endsWith('ts')) {
+    var options = {
+      entryPoints: [source],
+      bundle: true,
+      sourcemap: dev ? 'inline' : false,
+      minify: build,
+      logLevel: 'error',
+      define: {
+        'STAGE': `"${stage}"`
+      },
+      outfile,
+      platform
+    }
+
+    if (source.endsWith('jsx')) {
+      options.jsxFactory = 'h';
+      options.jsxFragment = 'Fragment'
+    }
+
     buildExe = () => {
       try {
-        esbuild.buildSync({
-          entryPoints: [source],
-          bundle: true,
-          sourcemap: dev ? 'inline' : false,
-          minify: build,
-          jsxFactory: 'h',
-          jsxFragment: 'Fragment',
-          logLevel: 'error',
-          define: {
-            'STAGE': `"${stage}"`
-          },
-          outfile,
-          platform
-        })
+        esbuild.buildSync(options)
         logSuccess()
       } catch (e) {
         console.log(e);
