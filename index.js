@@ -39,7 +39,6 @@ function build({
       define: {
         'STAGE': `"${stage}"`
       },
-      loader : 'jsx',
       outfile,
       platform
     }
