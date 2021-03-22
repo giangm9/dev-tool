@@ -11,7 +11,8 @@ function build({
   source,
   outfile,
   platform,
-  watch
+  watch,
+  jsxFactory
 }) {
 
   const dev = stage == 'dev';
@@ -44,10 +45,12 @@ function build({
       platform
     }
 
-    if (source.endsWith('jsx')) {
+    if (source.endsWith('jsx') && jsxFactory != 'react') {
       options.jsxFactory = 'h';
       options.jsxFragment = 'Fragment'
     }
+
+
 
     buildExe = () => {
       try {
