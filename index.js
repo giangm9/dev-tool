@@ -50,6 +50,10 @@ function build({
       options.jsxFragment = 'Fragment'
     }
 
+    if (jsxFactory == 'react') {
+      options.define['process.env.NODE_ENV'] = '"development"'
+    }
+
 
 
     buildExe = () => {
