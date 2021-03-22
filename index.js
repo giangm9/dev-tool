@@ -4,15 +4,13 @@ const pm2 = require('pm2');
 const sass = require('sass');
 const fs = require("fs");
 
-const stage = process.argv[2];
-
-
 function build({
   source,
   outfile,
   platform,
   watch,
-  jsxFactory
+  jsxFactory,
+  stage
 }) {
 
   const dev = stage == 'dev';
@@ -41,6 +39,7 @@ function build({
       define: {
         'STAGE': `"${stage}"`
       },
+      loader : 'jsx',
       outfile,
       platform
     }
