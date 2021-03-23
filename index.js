@@ -12,7 +12,7 @@ function build({
 }) {
 
   const dev = stage == 'dev';
-  const build = stage == 'build'
+  const prod = stage == 'prod'
 
   let buildExe = null;
 
@@ -27,12 +27,12 @@ function build({
     }
   }
 
-  if (source.endsWith('jsx') || source.endsWith('ts')) {
+  if (source.endsWith('jsx') || source.endsWith('ts') || source.endsWith('js')) {
     var options = {
       entryPoints: [source],
       bundle: true,
-      sourcemap: dev ? 'inline' : false,
-      minify: build,
+      sourcemap: dev ? true : false,
+      minify: prod,
       logLevel: 'error',
       define: {
         'STAGE': `"${stage}"`,
