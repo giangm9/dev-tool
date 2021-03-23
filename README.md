@@ -4,17 +4,12 @@ Simple dev tool for js fullstack
 # Examples
 
 ## Client
-index.js
+index.jsx
 ```js
-import { render } from "preact"
+import React from "react"
+import ReactDOM from "react-dom"
 
-export function App() {
-
-
-  return <h1>Hello</h1>
-}
-
-render(<App />, document.body)
+ReactDOM.render(<h1>Hello</h1>, document.body)
 ```
 
 dev.js
@@ -25,4 +20,4 @@ dev.build({
   outfile : "index.js"
 })
 ```
-
+See more at `/examples`

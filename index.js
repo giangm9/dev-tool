@@ -1,6 +1,5 @@
 const chokidar = require('chokidar');
 const esbuild = require('esbuild')
-const pm2 = require('pm2');
 const sass = require('sass');
 const fs = require("fs");
 
@@ -9,7 +8,6 @@ function build({
   outfile,
   platform,
   watch,
-  jsxFactory,
   stage
 }) {
 
@@ -37,22 +35,12 @@ function build({
       minify: build,
       logLevel: 'error',
       define: {
-        'STAGE': `"${stage}"`
+        'STAGE': `"${stage}"`,
+        'process.env.NODE_ENV' : dev ? '"development"' : '"production"'
       },
       outfile,
       platform
     }
-
-    if (source.endsWith('jsx') && jsxFactory != 'react') {
-      options.jsxFactory = 'h';
-      options.jsxFragment = 'Fragment'
-    }
-
-    if (jsxFactory == 'react') {
-      options.define['process.env.NODE_ENV'] = '"development"'
-    }
-
-
 
     buildExe = () => {
       try {
